@@ -39,6 +39,10 @@ mixin _$AppSettingProps {
   bool get hidden => throw _privateConstructorUsedError;
   bool get developerMode => throw _privateConstructorUsedError;
   RecoveryStrategy get recoveryStrategy => throw _privateConstructorUsedError;
+  bool get enableClipboardMonitor => throw _privateConstructorUsedError;
+  bool get enableAutoSwitch => throw _privateConstructorUsedError;
+  int get autoSwitchInterval => throw _privateConstructorUsedError;
+  String get autoSwitchTestUrl => throw _privateConstructorUsedError;
 
   /// Serializes this AppSettingProps to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,7 +78,11 @@ abstract class $AppSettingPropsCopyWith<$Res> {
       bool minimizeOnExit,
       bool hidden,
       bool developerMode,
-      RecoveryStrategy recoveryStrategy});
+      RecoveryStrategy recoveryStrategy,
+      bool enableClipboardMonitor,
+      bool enableAutoSwitch,
+      int autoSwitchInterval,
+      String autoSwitchTestUrl});
 }
 
 /// @nodoc
@@ -109,6 +117,10 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
     Object? hidden = null,
     Object? developerMode = null,
     Object? recoveryStrategy = null,
+    Object? enableClipboardMonitor = null,
+    Object? enableAutoSwitch = null,
+    Object? autoSwitchInterval = null,
+    Object? autoSwitchTestUrl = null,
   }) {
     return _then(_value.copyWith(
       locale: freezed == locale
@@ -179,6 +191,22 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
           ? _value.recoveryStrategy
           : recoveryStrategy // ignore: cast_nullable_to_non_nullable
               as RecoveryStrategy,
+      enableClipboardMonitor: null == enableClipboardMonitor
+          ? _value.enableClipboardMonitor
+          : enableClipboardMonitor // ignore: cast_nullable_to_non_nullable
+              as bool,
+      enableAutoSwitch: null == enableAutoSwitch
+          ? _value.enableAutoSwitch
+          : enableAutoSwitch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      autoSwitchInterval: null == autoSwitchInterval
+          ? _value.autoSwitchInterval
+          : autoSwitchInterval // ignore: cast_nullable_to_non_nullable
+              as int,
+      autoSwitchTestUrl: null == autoSwitchTestUrl
+          ? _value.autoSwitchTestUrl
+          : autoSwitchTestUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -209,7 +237,11 @@ abstract class _$$AppSettingPropsImplCopyWith<$Res>
       bool minimizeOnExit,
       bool hidden,
       bool developerMode,
-      RecoveryStrategy recoveryStrategy});
+      RecoveryStrategy recoveryStrategy,
+      bool enableClipboardMonitor,
+      bool enableAutoSwitch,
+      int autoSwitchInterval,
+      String autoSwitchTestUrl});
 }
 
 /// @nodoc
@@ -242,6 +274,10 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
     Object? hidden = null,
     Object? developerMode = null,
     Object? recoveryStrategy = null,
+    Object? enableClipboardMonitor = null,
+    Object? enableAutoSwitch = null,
+    Object? autoSwitchInterval = null,
+    Object? autoSwitchTestUrl = null,
   }) {
     return _then(_$AppSettingPropsImpl(
       locale: freezed == locale
@@ -312,6 +348,22 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
           ? _value.recoveryStrategy
           : recoveryStrategy // ignore: cast_nullable_to_non_nullable
               as RecoveryStrategy,
+      enableClipboardMonitor: null == enableClipboardMonitor
+          ? _value.enableClipboardMonitor
+          : enableClipboardMonitor // ignore: cast_nullable_to_non_nullable
+              as bool,
+      enableAutoSwitch: null == enableAutoSwitch
+          ? _value.enableAutoSwitch
+          : enableAutoSwitch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      autoSwitchInterval: null == autoSwitchInterval
+          ? _value.autoSwitchInterval
+          : autoSwitchInterval // ignore: cast_nullable_to_non_nullable
+              as int,
+      autoSwitchTestUrl: null == autoSwitchTestUrl
+          ? _value.autoSwitchTestUrl
+          : autoSwitchTestUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -337,7 +389,11 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
       this.minimizeOnExit = true,
       this.hidden = false,
       this.developerMode = false,
-      this.recoveryStrategy = RecoveryStrategy.compatible})
+      this.recoveryStrategy = RecoveryStrategy.compatible,
+      this.enableClipboardMonitor = false,
+      this.enableAutoSwitch = false,
+      this.autoSwitchInterval = 300,
+      this.autoSwitchTestUrl = defaultTestUrl})
       : _dashboardWidgets = dashboardWidgets;
 
   factory _$AppSettingPropsImpl.fromJson(Map<String, dynamic> json) =>
@@ -400,10 +456,22 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
   @override
   @JsonKey()
   final RecoveryStrategy recoveryStrategy;
+  @override
+  @JsonKey()
+  final bool enableClipboardMonitor;
+  @override
+  @JsonKey()
+  final bool enableAutoSwitch;
+  @override
+  @JsonKey()
+  final int autoSwitchInterval;
+  @override
+  @JsonKey()
+  final String autoSwitchTestUrl;
 
   @override
   String toString() {
-    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, minimizeOnExit: $minimizeOnExit, hidden: $hidden, developerMode: $developerMode, recoveryStrategy: $recoveryStrategy)';
+    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, minimizeOnExit: $minimizeOnExit, hidden: $hidden, developerMode: $developerMode, recoveryStrategy: $recoveryStrategy, enableClipboardMonitor: $enableClipboardMonitor, enableAutoSwitch: $enableAutoSwitch, autoSwitchInterval: $autoSwitchInterval, autoSwitchTestUrl: $autoSwitchTestUrl)';
   }
 
   @override
@@ -440,30 +508,43 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
             (identical(other.developerMode, developerMode) ||
                 other.developerMode == developerMode) &&
             (identical(other.recoveryStrategy, recoveryStrategy) ||
-                other.recoveryStrategy == recoveryStrategy));
+                other.recoveryStrategy == recoveryStrategy) &&
+            (identical(other.enableClipboardMonitor, enableClipboardMonitor) ||
+                other.enableClipboardMonitor == enableClipboardMonitor) &&
+            (identical(other.enableAutoSwitch, enableAutoSwitch) ||
+                other.enableAutoSwitch == enableAutoSwitch) &&
+            (identical(other.autoSwitchInterval, autoSwitchInterval) ||
+                other.autoSwitchInterval == autoSwitchInterval) &&
+            (identical(other.autoSwitchTestUrl, autoSwitchTestUrl) ||
+                other.autoSwitchTestUrl == autoSwitchTestUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      locale,
-      const DeepCollectionEquality().hash(_dashboardWidgets),
-      onlyStatisticsProxy,
-      autoLaunch,
-      silentLaunch,
-      autoRun,
-      openLogs,
-      closeConnections,
-      testUrl,
-      isAnimateToPage,
-      autoCheckUpdate,
-      showLabel,
-      disclaimerAccepted,
-      minimizeOnExit,
-      hidden,
-      developerMode,
-      recoveryStrategy);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        locale,
+        const DeepCollectionEquality().hash(_dashboardWidgets),
+        onlyStatisticsProxy,
+        autoLaunch,
+        silentLaunch,
+        autoRun,
+        openLogs,
+        closeConnections,
+        testUrl,
+        isAnimateToPage,
+        autoCheckUpdate,
+        showLabel,
+        disclaimerAccepted,
+        minimizeOnExit,
+        hidden,
+        developerMode,
+        recoveryStrategy,
+        enableClipboardMonitor,
+        enableAutoSwitch,
+        autoSwitchInterval,
+        autoSwitchTestUrl
+      ]);
 
   /// Create a copy of AppSettingProps
   /// with the given fields replaced by the non-null parameter values.
@@ -501,7 +582,11 @@ abstract class _AppSettingProps implements AppSettingProps {
       final bool minimizeOnExit,
       final bool hidden,
       final bool developerMode,
-      final RecoveryStrategy recoveryStrategy}) = _$AppSettingPropsImpl;
+      final RecoveryStrategy recoveryStrategy,
+      final bool enableClipboardMonitor,
+      final bool enableAutoSwitch,
+      final int autoSwitchInterval,
+      final String autoSwitchTestUrl}) = _$AppSettingPropsImpl;
 
   factory _AppSettingProps.fromJson(Map<String, dynamic> json) =
       _$AppSettingPropsImpl.fromJson;
@@ -541,6 +626,14 @@ abstract class _AppSettingProps implements AppSettingProps {
   bool get developerMode;
   @override
   RecoveryStrategy get recoveryStrategy;
+  @override
+  bool get enableClipboardMonitor;
+  @override
+  bool get enableAutoSwitch;
+  @override
+  int get autoSwitchInterval;
+  @override
+  String get autoSwitchTestUrl;
 
   /// Create a copy of AppSettingProps
   /// with the given fields replaced by the non-null parameter values.

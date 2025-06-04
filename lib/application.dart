@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fl_clash/clash/clash.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/l10n/l10n.dart';
+import 'package:fl_clash/manager/enhanced_manager.dart';
 import 'package:fl_clash/manager/hotkey_manager.dart';
 import 'package:fl_clash/manager/manager.dart';
 import 'package:fl_clash/plugins/app.dart';
@@ -104,7 +105,9 @@ class ApplicationState extends ConsumerState<Application> {
             globalState.appController.updateLocalIp();
             globalState.appController.addCheckIpNumDebounce();
           },
-          child: child,
+          child: EnhancedManager(
+            child: child,
+          ),
         ),
       ),
     );

@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'backup_and_recovery.dart';
 import 'developer.dart';
+import 'enhanced_features.dart';
 import 'theme.dart';
 import 'package:path/path.dart' show dirname, join;
 
@@ -78,6 +79,7 @@ class _ToolboxFragmentState extends ConsumerState<ToolsFragment> {
         if (Platform.isAndroid) _AccessItem(),
         _ConfigItem(),
         _SettingItem(),
+        _EnhancedFeaturesItem(),
       ],
     );
   }
@@ -264,6 +266,23 @@ class _SettingItem extends StatelessWidget {
       delegate: OpenDelegate(
         title: appLocalizations.application,
         widget: const ApplicationSettingFragment(),
+      ),
+    );
+  }
+}
+
+class _EnhancedFeaturesItem extends StatelessWidget {
+  const _EnhancedFeaturesItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const Icon(Icons.auto_awesome),
+      title: const Text('增强功能'),
+      subtitle: const Text('剪贴板监听、自动测速切换等增强功能'),
+      delegate: OpenDelegate(
+        title: '增强功能',
+        widget: const EnhancedFeaturesFragment(),
       ),
     );
   }

@@ -86,6 +86,10 @@ class AppSettingProps with _$AppSettingProps {
     @Default(false) bool hidden,
     @Default(false) bool developerMode,
     @Default(RecoveryStrategy.compatible) RecoveryStrategy recoveryStrategy,
+    @Default(false) bool enableClipboardMonitor,
+    @Default(false) bool enableAutoSwitch,
+    @Default(300) int autoSwitchInterval,
+    @Default(defaultTestUrl) String autoSwitchTestUrl,
   }) = _AppSettingProps;
 
   factory AppSettingProps.fromJson(Map<String, Object?> json) =>

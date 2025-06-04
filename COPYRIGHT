@@ -1,0 +1,37 @@
+FlClash Enhanced Features
+Copyright (C) 2025 sadhjkawh
+Based on FlClash by chen08209
+
+Original FlClash:
+Copyright (C) 2024 chen08209
+https://github.com/chen08209/FlClash
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+ENHANCED FEATURES MODIFICATIONS:
+
+This enhanced version includes the following modifications made in 2025 by sadhjkawh:
+
+1. Multi-protocol clipboard link parsing (ss://, vless://, vmess://, ssr://, trojan://)
+2. Intelligent clipboard monitoring system
+3. Smart auto speed testing with user-node filtering
+4. Multi-link batch import functionality
+5. Optimized test URL settings interface
+6. Complete import history management
+7. User interface optimizations and theme adaptations
+8. Cross-platform compatibility improvements
+
+All modifications are released under the GPL-3.0 license terms. 

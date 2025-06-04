@@ -40,10 +40,10 @@ extension ColorExtension on Color {
   }
 
   int get value32bit {
-    return _floatToInt8(a) << 24 |
-        _floatToInt8(r) << 16 |
-        _floatToInt8(g) << 8 |
-        _floatToInt8(b) << 0;
+    return _floatToInt8(alpha / 255.0) << 24 |
+        _floatToInt8(red / 255.0) << 16 |
+        _floatToInt8(green / 255.0) << 8 |
+        _floatToInt8(blue / 255.0) << 0;
   }
 
   int get alpha8bit => (0xff000000 & value32bit) >> 24;
@@ -70,10 +70,6 @@ extension ColorExtension on Color {
   }
 
   String get hex {
-    final value = toARGB32();
-    final red = (value >> 16) & 0xFF;
-    final green = (value >> 8) & 0xFF;
-    final blue = value & 0xFF;
     return '#${red.toRadixString(16).padLeft(2, '0')}'
             '${green.toRadixString(16).padLeft(2, '0')}'
             '${blue.toRadixString(16).padLeft(2, '0')}'

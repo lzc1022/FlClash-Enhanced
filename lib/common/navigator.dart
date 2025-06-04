@@ -219,7 +219,7 @@ class _CommonPageTransitionState extends State<CommonPageTransition> {
         end: _CommonEdgeShadowDecoration(
           <Color>[
             widget.context.colorScheme.inverseSurface
-                .withValues(alpha: 0.02),
+                .withAlpha((0.02 * 255).round()),
             Colors.transparent,
           ],
         ),

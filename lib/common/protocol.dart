@@ -14,18 +14,19 @@ class Protocol {
 
   void register(String scheme) {
     String protocolRegKey = 'Software\\Classes\\$scheme';
-    RegistryValue protocolRegValue = RegistryValue.string(
-      'URL Protocol',
-      '',
-    );
     String protocolCmdRegKey = 'shell\\open\\command';
-    RegistryValue protocolCmdRegValue = RegistryValue.string(
-      '',
-      '"${Platform.resolvedExecutable}" "%1"',
-    );
+    
     final regKey = Registry.currentUser.createKey(protocolRegKey);
-    regKey.createValue(protocolRegValue);
-    regKey.createKey(protocolCmdRegKey).createValue(protocolCmdRegValue);
+    regKey.createValue(RegistryValue(
+      'URL Protocol',
+      RegistryValueType.string,
+      '',
+    ));
+    regKey.createKey(protocolCmdRegKey).createValue(RegistryValue(
+      '',
+      RegistryValueType.string,
+      '"${Platform.resolvedExecutable}" "%1"',
+    ));
   }
 }
 

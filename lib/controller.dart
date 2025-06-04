@@ -7,11 +7,14 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:fl_clash/clash/clash.dart';
 import 'package:fl_clash/common/archive.dart';
+import 'package:fl_clash/common/link_parser.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/manager/clipboard_manager.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -621,6 +624,13 @@ class AppController {
     toProfiles();
     final commonScaffoldState = globalState.homeScaffoldKey.currentState;
     if (commonScaffoldState?.mounted != true) return;
+    
+    // 检查是否为代理链接
+    if (_isProxyLink(url)) {
+      await _addProfileFromProxyLink(url);
+      return;
+    }
+    
     final profile = await commonScaffoldState?.loadingRun<Profile>(
       () async {
         return await Profile.normal(
@@ -631,6 +641,146 @@ class AppController {
     );
     if (profile != null) {
       await addProfile(profile);
+    }
+  }
+
+  /// 检查是否为代理链接
+  bool _isProxyLink(String link) {
+    return link.startsWith('vmess://') ||
+           link.startsWith('v2ray://') ||
+           link.startsWith('v2://') ||
+           link.startsWith('ssr://') ||
+           link.startsWith('ss://') ||
+           link.startsWith('vless://') ||
+           link.startsWith('trojan://');
+  }
+
+  /// 从代理链接添加配置文件
+  Future<void> _addProfileFromProxyLink(String link) async {
+    final commonScaffoldState = globalState.homeScaffoldKey.currentState;
+    if (commonScaffoldState?.mounted != true) return;
+    
+    final profile = await commonScaffoldState?.loadingRun<Profile>(
+      () async {
+        // 解析代理链接
+        final proxies = LinkParser.parseProxyLinks(link);
+        if (proxies.isEmpty) {
+          throw Exception('无法解析代理链接');
+        }
+        
+        // 生成 Clash 配置
+        final clashConfig = LinkParser.generateClashConfig(proxies);
+        final configString = json.encode(clashConfig);
+        
+        // 创建配置文件
+        final label = proxies.length == 1 
+            ? proxies.first['name'] as String
+            : '导入的节点 (${proxies.length}个)';
+            
+        return await Profile.normal(label: label).saveFileWithString(configString);
+      },
+      title: "${appLocalizations.add}${appLocalizations.profile}",
+    );
+    
+    if (profile != null) {
+      await addProfile(profile);
+    }
+  }
+
+  /// 从解析好的代理链接列表添加配置文件
+  Future<void> addProfileFromProxyLinks(List<String> proxyLinks) async {
+    if (globalState.navigatorKey.currentState?.canPop() ?? false) {
+      globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
+    }
+    toProfiles();
+    
+    final commonScaffoldState = globalState.homeScaffoldKey.currentState;
+    if (commonScaffoldState?.mounted != true) return;
+    
+    final profile = await commonScaffoldState?.loadingRun<Profile>(
+      () async {
+        // 解析所有代理链接
+        final allProxies = <Map<String, dynamic>>[];
+        final existingNames = <String>{};
+        
+        for (final link in proxyLinks) {
+          final proxy = LinkParser.parseProxyLink(link);
+          if (proxy != null) {
+            // 确保节点名称唯一
+            final originalName = proxy['name'] as String;
+            final uniqueName = LinkParser.generateUniqueName(originalName, existingNames);
+            proxy['name'] = uniqueName;
+            existingNames.add(uniqueName);
+            
+            allProxies.add(proxy);
+          }
+        }
+        
+        if (allProxies.isEmpty) {
+          throw Exception('无法解析任何代理链接');
+        }
+        
+        // 生成 Clash 配置
+        final clashConfig = LinkParser.generateClashConfig(allProxies);
+        final configString = json.encode(clashConfig);
+        
+        // 创建配置文件
+        final label = allProxies.length == 1 
+            ? allProxies.first['name'] as String
+            : '导入的节点 (${allProxies.length}个)';
+            
+        return await Profile.normal(label: label).saveFileWithString(configString);
+      },
+      title: "${appLocalizations.add}${appLocalizations.profile}",
+    );
+    
+    if (profile != null) {
+      await addProfile(profile);
+    }
+  }
+
+  /// 从剪贴板导入代理链接
+  Future<void> addProfileFromClipboard() async {
+    try {
+      final data = await Clipboard.getData('text/plain');
+      final text = data?.text?.trim();
+      
+      if (text == null || text.isEmpty) {
+        globalState.showMessage(
+          title: "错误",
+          message: const TextSpan(text: "剪贴板为空"),
+        );
+        return;
+      }
+      
+      // 使用ClipboardManager的解析逻辑来处理多种分隔符
+      final clipboardManager = ClipboardManager.instance;
+      final proxyLinks = clipboardManager.parseProxyLinks(text);
+      
+      if (proxyLinks.isEmpty) {
+        // 尝试作为订阅链接处理
+        if (Uri.tryParse(text) != null) {
+          await addProfileFormURL(text);
+        } else {
+          globalState.showMessage(
+            title: "错误", 
+            message: const TextSpan(text: "剪贴板中没有找到有效的代理链接或订阅链接"),
+          );
+        }
+        return;
+      }
+      
+      // 记录到导入历史（手动导入）
+      ClipboardManager.instance.addToHistory(text, proxyLinks.length, true);
+      
+      // 处理代理链接 - 直接调用新的方法
+      await addProfileFromProxyLinks(proxyLinks);
+      
+    } catch (e) {
+      globalState.showMessage(
+        title: "错误",
+        message: TextSpan(text: "导入失败: $e"),
+      );
     }
   }
 

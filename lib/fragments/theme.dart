@@ -43,11 +43,13 @@ class ThemeFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        spacing: 24,
         children: [
           _ThemeModeItem(),
+          const SizedBox(height: 24),
           _PrimaryColorItem(),
+          const SizedBox(height: 24),
           _PrueBlackItem(),
+          const SizedBox(height: 24),
           _TextScaleFactorItem(),
           const SizedBox(
             height: 64,
@@ -515,7 +517,6 @@ class _TextScaleFactorItem extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
-            spacing: 32,
             children: [
               Expanded(
                 child: DisabledMask(
@@ -525,7 +526,6 @@ class _TextScaleFactorItem extends ConsumerWidget {
                     child: SliderTheme(
                       data: _SliderDefaultsM3(context),
                       child: Slider(
-                        padding: EdgeInsets.zero,
                         min: minTextScale,
                         max: maxTextScale,
                         value: textScale.scale,
@@ -541,6 +541,7 @@ class _TextScaleFactorItem extends ConsumerWidget {
                   ),
                 ),
               ),
+              const SizedBox(width: 32),
               Padding(
                 padding: EdgeInsets.only(right: 4),
                 child: Text(
@@ -579,7 +580,7 @@ class _PaletteDialogState extends State<_PaletteDialog> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(_controller.value.toARGB32());
+            Navigator.of(context).pop(_controller.value.value);
           },
           child: Text(appLocalizations.confirm),
         ),
@@ -690,13 +691,13 @@ class _SliderDefaultsM3 extends SliderThemeData {
 
   @override
   SliderComponentShape? get valueIndicatorShape =>
-      const RoundedRectSliderValueIndicatorShape();
+      const PaddleSliderValueIndicatorShape();
 
   @override
-  SliderComponentShape? get thumbShape => const HandleThumbShape();
+  SliderComponentShape? get thumbShape => const RoundSliderThumbShape();
 
   @override
-  SliderTrackShape? get trackShape => const GappedSliderTrackShape();
+  SliderTrackShape? get trackShape => const RoundedRectSliderTrackShape();
 
   @override
   SliderComponentShape? get overlayShape => const RoundSliderOverlayShape();

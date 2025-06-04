@@ -282,7 +282,6 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            spacing: 8,
             children: [
               _buildIconButton(
                 onPressed: value.result == null
@@ -292,6 +291,7 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
                       },
                 icon: Icons.arrow_upward,
               ),
+              const SizedBox(width: 8),
               _buildIconButton(
                 onPressed: value.result == null
                     ? null
@@ -354,7 +354,6 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          spacing: 8,
           children: [
             _buildCheckText(
               context: context,
@@ -364,6 +363,7 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
                 controller.toggleCaseSensitive();
               },
             ),
+            const SizedBox(width: 8),
             _buildCheckText(
               context: context,
               text: '.*',

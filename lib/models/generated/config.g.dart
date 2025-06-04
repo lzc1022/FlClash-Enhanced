@@ -30,6 +30,10 @@ _$AppSettingPropsImpl _$$AppSettingPropsImplFromJson(
       recoveryStrategy: $enumDecodeNullable(
               _$RecoveryStrategyEnumMap, json['recoveryStrategy']) ??
           RecoveryStrategy.compatible,
+      enableClipboardMonitor: json['enableClipboardMonitor'] as bool? ?? false,
+      enableAutoSwitch: json['enableAutoSwitch'] as bool? ?? false,
+      autoSwitchInterval: (json['autoSwitchInterval'] as num?)?.toInt() ?? 300,
+      autoSwitchTestUrl: json['autoSwitchTestUrl'] as String? ?? defaultTestUrl,
     );
 
 Map<String, dynamic> _$$AppSettingPropsImplToJson(
@@ -54,6 +58,10 @@ Map<String, dynamic> _$$AppSettingPropsImplToJson(
       'hidden': instance.hidden,
       'developerMode': instance.developerMode,
       'recoveryStrategy': _$RecoveryStrategyEnumMap[instance.recoveryStrategy]!,
+      'enableClipboardMonitor': instance.enableClipboardMonitor,
+      'enableAutoSwitch': instance.enableAutoSwitch,
+      'autoSwitchInterval': instance.autoSwitchInterval,
+      'autoSwitchTestUrl': instance.autoSwitchTestUrl,
     };
 
 const _$RecoveryStrategyEnumMap = {
