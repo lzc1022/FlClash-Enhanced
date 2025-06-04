@@ -5,7 +5,7 @@
 ## 📋 项目信息
 
 - **原项目地址**：[FlClash](https://github.com/chen08209/FlClash) by [chen08209](https://github.com/chen08209)
-- **增强版本贡献者**：[sadhjkawh](https://github.com/sadhjkawh)
+- **增强版本地址**：[FlClash-Enhanced](https://github.com/sadhjkawh/FlClash-Enhanced) by [sadhjkawh](https://github.com/sadhjkawh)
 - **许可证**：[GPL-3.0 License](LICENSE)
 - **基于版本**：FlClash v0.8.84+
 - **预构建平台**：Windows x64 ✅ | Android/macOS/Linux 需自行构建 🔧
@@ -13,6 +13,8 @@
 > 本增强版本在原项目基础上添加了智能剪切板监听、多协议链接解析、智能自动测速等全新功能，完全遵循 GPL-3.0 开源许可证。
 > 
 > **📦 构建说明**：增强版本仅提供 Windows 预构建版本，其他平台用户需要根据开发者信息中的指南自行构建。
+> 
+> ⚠️ **重要提示**：此增强版本为开发版本，尚未进行大量测试，可能存在未知Bug。建议开发者或熟练用户使用，普通用户请谨慎使用并做好数据备份。
 
 ## 🎯 功能概览
 
