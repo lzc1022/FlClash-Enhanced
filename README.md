@@ -30,7 +30,7 @@
 
 ### Windows 用户 ✅
 增强版本已提供 Windows x64 预构建版本：
-- 📁 位置：`build/windows/x64/runner/Release/`
+- 📁 位置：``
 - 🚀 直接运行：`FlClash.exe`
 
 ### 其他平台用户 🔧
@@ -41,7 +41,7 @@ Android、macOS、Linux 用户需要自行构建，详见 [构建指南](FEATURE
 **此为开发版本**，尚未进行大量测试，可能存在未知Bug。
 - 🧑‍💻 **推荐用户**：开发者或熟练用户
 - 💾 **数据安全**：使用前请做好配置备份
-- 🐛 **问题反馈**：欢迎在 [Issues](https://github.com/sadhjkawh/FlClash-Enhanced/issues) 中报告Bug
+
 
 ## 📖 详细文档
 
