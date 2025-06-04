@@ -8,11 +8,11 @@
 - **增强版本地址**：[FlClash-Enhanced](https://github.com/sadhjkawh/FlClash-Enhanced) by [sadhjkawh](https://github.com/sadhjkawh)
 - **许可证**：[GPL-3.0 License](LICENSE)
 - **基于版本**：FlClash v0.8.84+
-- **预构建平台**：Windows x64 ✅ | Android/macOS/Linux 需自行构建 🔧
+- **预构建平台**：Windows x64 ✅ | Android ✅ | macOS/Linux 需自行构建 🔧
 
 > 本增强版本在原项目基础上添加了智能剪切板监听、多协议链接解析、智能自动测速等全新功能，完全遵循 GPL-3.0 开源许可证。
 > 
-> **📦 构建说明**：增强版本仅提供 Windows 预构建版本，其他平台用户需要根据开发者信息中的指南自行构建。
+> **📦 构建说明**：增强版本提供 Windows x64 和 Android 预构建版本，macOS/Linux 用户需要根据开发者信息中的指南自行构建。
 > 
 > ⚠️ **重要提示**：此增强版本为开发版本，尚未进行大量测试，可能存在未知Bug。建议开发者或熟练用户使用，普通用户请谨慎使用并做好数据备份。
 
@@ -261,15 +261,22 @@ bool _isUserAddedProxy(String proxyName) {
 
 #### Windows 版本 ✅
 增强版本已提供 Windows x64 预构建版本：
-- **位置**：``
+- **位置**：[GitHub Releases](https://github.com/sadhjkawh/FlClash-Enhanced/releases)
 - **文件**：`FlClash.exe` + 相关依赖文件
 - **环境**：生产环境（APP_ENV=stable）
 - **架构**：x64 (amd64)
 
-#### 其他平台构建 🔧
-**Android、macOS、Linux** 需要自行构建：
+#### Android 版本 ✅
+增强版本已提供 Android 预构建版本：
+- **位置**：[GitHub Releases](https://github.com/sadhjkawh/FlClash-Enhanced/releases)
+- **文件**：`FlClash-Enhanced.apk`
+- **环境**：生产环境（APP_ENV=stable）
+- **架构**：arm64-v8a / armeabi-v7a / x86_64
 
-> ⚠️ **注意**：增强版本仅提供了 Windows 构建版本。如需使用 Android、macOS 或 Linux 版本，请按照以下说明自行构建。
+#### 其他平台构建 🔧
+**macOS、Linux** 需要自行构建：
+
+> ⚠️ **注意**：增强版本已提供 Windows x64 和 Android 构建版本。如需使用 macOS 或 Linux 版本，请按照以下说明自行构建。
 
 ### 构建要求
 ```bash
@@ -278,7 +285,7 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 
 # 生产环境构建命令
 dart run setup.dart windows --arch amd64 --out app --env stable  # Windows ✅ 已构建
-dart run setup.dart android --arch arm64 --out app --env stable  # Android ⚠️ 需自行构建
+dart run setup.dart android --arch arm64 --out app --env stable  # Android ✅ 已构建
 dart run setup.dart macos --arch arm64 --out app --env stable    # macOS ⚠️ 需自行构建  
 dart run setup.dart linux --arch amd64 --out app --env stable   # Linux ⚠️ 需自行构建
 ```

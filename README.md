@@ -22,25 +22,34 @@
 | 平台 | 多协议解析 | 剪切板监听 | 批量导入 | 智能测速 | 预构建版本 |
 |------|-----------|-----------|---------|----------|------------|
 | Windows | ✅ | ✅ | ✅ | ✅ | ✅ 已提供 |
-| Android | ✅ | ✅ | ✅ | ✅ | ⚠️ 需自建 |
+| Android | ✅ | ✅ | ✅ | ✅ | ✅ 已提供 |
 | macOS | ✅ | ✅ | ✅ | ✅ | ⚠️ 需自建 |
 | Linux | ✅ | ✅ | ✅ | ✅ | ⚠️ 需自建 |
 
 ## 📦 下载和使用
 
-### Windows 用户 ✅
-增强版本已提供 Windows x64 预构建版本：
-- 📁 下载位置：[GitHub Releases](https://github.com/sadhjkawh/FlClash-Enhanced/releases)
+### 预构建版本 ✅
+增强版本已提供多平台预构建版本：
+- 📁 **统一下载位置**：[GitHub Releases](https://github.com/sadhjkawh/FlClash-Enhanced/releases)
+
+#### Windows x64
 - 🚀 直接运行：`FlClash.exe`
+- 📦 支持格式：便携版 / 安装包
+
+#### Android
+- 📱 支持架构：arm64-v8a / armeabi-v7a / x86_64
+- 📦 格式：APK 安装包
+- ⚠️ 需要允许安装未知来源应用
 
 ### 其他平台用户 🔧
-Android、macOS、Linux 用户需要自行构建，详见 [构建指南](FEATURES_AND_ENHANCEMENTS.md#构建要求)
+macOS、Linux 用户需要自行构建，详见 [构建指南](FEATURES_AND_ENHANCEMENTS.md#构建要求)
 
 ## ⚠️ 重要提示
 
 **此为开发版本**，尚未进行大量测试，可能存在未知Bug。
 - 🧑‍💻 **推荐用户**：开发者或熟练用户
 - 💾 **数据安全**：使用前请做好配置备份
+- 📱 **Android 注意**：APK 为未签名版本，需要允许安装未知来源应用
 - 🐛 **问题反馈**：欢迎在 [Issues](https://github.com/sadhjkawh/FlClash-Enhanced/issues) 中报告Bug
 
 
