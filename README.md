@@ -30,7 +30,7 @@
 
 ### Windows 用户 ✅
 增强版本已提供 Windows x64 预构建版本：
-- 📁 位置：``
+- 📁 下载位置：`https://github.com/sadhjkawh/FlClash-Enhanced/releases`
 - 🚀 直接运行：`FlClash.exe`
 
 ### 其他平台用户 🔧
