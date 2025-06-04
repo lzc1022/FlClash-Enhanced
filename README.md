@@ -34,7 +34,7 @@
 
 #### Windows x64
 - 🚀 直接运行：`FlClash.exe`
-- 📦 支持格式：便携版 / 安装包
+- 📦 支持格式：便携版
 
 #### Android
 - 📱 支持架构：arm64-v8a / armeabi-v7a / x86_64
