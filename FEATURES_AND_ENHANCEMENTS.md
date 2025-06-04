@@ -1,5 +1,13 @@
 # FlClash 增强功能完整指南
 
+<div align="center">
+  
+**语言选择 | Language Selection**
+
+[🇨🇳 中文](FEATURES_AND_ENHANCEMENTS.md) | [🇺🇸 English](FEATURES_AND_ENHANCEMENTS-EN.md)
+
+</div>
+
 本文档详细介绍了 FlClash 的所有新增功能和增强特性，包括跨平台支持、使用方法和技术实现细节。
 
 ## 📋 项目信息
