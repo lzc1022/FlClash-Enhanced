@@ -2,6 +2,14 @@
 
 ## FlClash Enhanced
 
+<div align="center">
+  
+**语言选择 | Language Selection**
+
+[🇨🇳 中文](README.md) | [🇺🇸 English](README-EN.md)
+
+</div>
+
 [![Original Project](https://img.shields.io/badge/Based_on-FlClash_v0.8.84+-blue?style=flat-square&logo=github)](https://github.com/chen08209/FlClash)
 [![GPL-3.0 License](https://img.shields.io/badge/License-GPL--3.0-red?style=flat-square)](LICENSE)
 [![Enhanced Features](https://img.shields.io/badge/Enhanced-2025-green?style=flat-square)](FEATURES_AND_ENHANCEMENTS.md)
