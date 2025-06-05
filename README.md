@@ -1,5 +1,3 @@
-
-
 ## FlClash Enhanced
 
 <div align="center">
