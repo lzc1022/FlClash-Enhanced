@@ -181,6 +181,54 @@ class PlatformAdapter {
     }
   }
   
+  /// 获取平台特定的最大并发测速数量
+  int get maxConcurrentSpeedTests {
+    switch (currentPlatform) {
+      case PlatformType.android:
+        // Android平台适中的并发数，避免过度占用资源
+        return 15;
+      case PlatformType.windows:
+      case PlatformType.macos:
+      case PlatformType.linux:
+        // 桌面平台可以支持更高的并发数
+        return 30;
+      default:
+        return 15;
+    }
+  }
+  
+  /// 获取平台特定的测速批次大小
+  int get speedTestBatchSize {
+    switch (currentPlatform) {
+      case PlatformType.android:
+        // Android平台使用较小的批次大小，确保稳定性
+        return 8;
+      case PlatformType.windows:
+      case PlatformType.macos:
+      case PlatformType.linux:
+        // 桌面平台可以使用较大的批次
+        return 15;
+      default:
+        return 8;
+    }
+  }
+  
+  /// 获取平台特定的并发测速延迟间隔
+  Duration get speedTestDelay {
+    switch (currentPlatform) {
+      case PlatformType.android:
+        // Android平台在批次间稍微延迟，避免网络拥塞
+        return const Duration(milliseconds: 100);
+      case PlatformType.windows:
+      case PlatformType.macos:
+      case PlatformType.linux:
+        // 桌面平台可以更快
+        return const Duration(milliseconds: 50);
+      default:
+        return const Duration(milliseconds: 100);
+    }
+  }
+
   /// 获取平台名称
   String get platformName {
     switch (currentPlatform) {

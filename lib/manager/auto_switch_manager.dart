@@ -21,7 +21,7 @@ class AutoSwitchManager {
   bool _isTesting = false; // 添加测试状态标记
   int _testInterval = PlatformAdapter.instance.defaultAutoSwitchInterval; // 测试间隔，秒
   String _testUrl = 'http://www.gstatic.com/generate_204';
-  int _concurrentTestCount = 20; // 并发测速数量，默认20个
+  int _concurrentTestCount = PlatformAdapter.instance.maxConcurrentSpeedTests; // 使用平台特定的并发数量
   WidgetRef? _ref; // 保存当前的WidgetRef
   
   /// 设置WidgetRef引用
@@ -79,7 +79,8 @@ class AutoSwitchManager {
   
   /// 设置并发测试数量
   void setConcurrentTestCount(int count) {
-    _concurrentTestCount = count.clamp(1, 50); // 限制在1-50之间
+    final maxConcurrent = PlatformAdapter.instance.maxConcurrentSpeedTests;
+    _concurrentTestCount = count.clamp(1, maxConcurrent); // 使用平台特定的最大值
   }
   
   /// 获取当前并发测试数量
@@ -143,35 +144,51 @@ class AutoSwitchManager {
         return null;
       }
       
-      print('正在测试组 ${group.name}，共 ${userProxies.length} 个用户节点');
+      print('正在测试组 ${group.name}，共 ${userProxies.length} 个用户节点 (并发数: $_concurrentTestCount)');
       
-      // 测试延迟 - 使用并发测速（批量处理避免过载）
+      // 测试延迟 - 使用优化的并发测速
       final delayResults = <String, int>{};
       
-      // 创建并发测速任务
-      final delayFutures = userProxies.map((proxy) async {
-        try {
-          final delayResult = await clashCore.getDelay(_testUrl, proxy.name);
-          
-          if (delayResult.value != null && delayResult.value! > 0) {
-            print('节点 ${proxy.name} 延迟: ${delayResult.value}ms');
-            return MapEntry(proxy.name, delayResult.value!);
-          }
-        } catch (e) {
-          // 测试失败，跳过该节点
-          print('测试节点 ${proxy.name} 失败: $e');
-        }
-        return null;
-      }).toList();
+      // 使用平台特定的批次大小进行分批测速
+      final platformBatchSize = PlatformAdapter.instance.speedTestBatchSize;
+      final batchDelay = PlatformAdapter.instance.speedTestDelay;
       
-      // 分批处理以避免同时发起过多请求
-      final batches = delayFutures.batch(_concurrentTestCount);
-      for (final batch in batches) {
-        final batchResults = await Future.wait(batch);
+      // 将代理分批进行测试
+      final proxyBatches = userProxies.batch(platformBatchSize);
+      
+      for (int batchIndex = 0; batchIndex < proxyBatches.length; batchIndex++) {
+        final batch = proxyBatches[batchIndex];
+        print('测试第 ${batchIndex + 1}/${proxyBatches.length} 批，共 ${batch.length} 个节点');
+        
+        // 为当前批次创建并发测速任务
+        final batchDelayFutures = batch.map((proxy) async {
+          try {
+            final delayResult = await clashCore.getDelay(_testUrl, proxy.name);
+            
+            if (delayResult.value != null && delayResult.value! > 0) {
+              print('节点 ${proxy.name} 延迟: ${delayResult.value}ms');
+              return MapEntry(proxy.name, delayResult.value!);
+            }
+          } catch (e) {
+            // 测试失败，跳过该节点
+            print('测试节点 ${proxy.name} 失败: $e');
+          }
+          return null;
+        }).toList();
+        
+        // 等待当前批次完成
+        final batchResults = await Future.wait(batchDelayFutures);
+        
+        // 收集结果
         for (final result in batchResults) {
           if (result != null) {
             delayResults[result.key] = result.value;
           }
+        }
+        
+        // 在批次间稍作延迟，避免网络拥塞
+        if (batchIndex < proxyBatches.length - 1) {
+          await Future.delayed(batchDelay);
         }
       }
       
@@ -326,7 +343,7 @@ class AutoSwitchManager {
     final enabled = config['enabled'] as bool? ?? false;
     _testInterval = config['testInterval'] as int? ?? PlatformAdapter.instance.defaultAutoSwitchInterval;
     _testUrl = config['testUrl'] as String? ?? 'http://www.gstatic.com/generate_204';
-    _concurrentTestCount = config['concurrentTestCount'] as int? ?? 20;
+    _concurrentTestCount = config['concurrentTestCount'] as int? ?? PlatformAdapter.instance.maxConcurrentSpeedTests;
     
     if (enabled && PlatformAdapter.instance.supportsBackgroundExecution) {
       enable();

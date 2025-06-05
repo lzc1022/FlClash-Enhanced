@@ -329,7 +329,7 @@ class Build {
     );
     await exec(
       name: "get distributor",
-      Build.getExecutable("dart pub global activate -s path $distributorDir"),
+      ["dart", "pub", "global", "activate", "-s", "path", distributorDir],
     );
   }
 
