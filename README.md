@@ -16,6 +16,12 @@
 
 基于 [FlClash](https://github.com/chen08209/FlClash) 的增强版本，添加了智能剪切板监听、多协议链接解析、智能自动测速等全新功能。
 
+## 🎥 功能演示
+
+https://github.com/user-attachments/assets/2025.mp4
+
+*视频展示了增强版的部分核心功能：智能剪切板监听、多协议链接解析等新特性*
+
 ## 🆕 增强功能
 
 ### 核心新功能
