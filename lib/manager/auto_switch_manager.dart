@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fl_clash/clash/clash.dart';
 import 'package:fl_clash/common/platform_adapter.dart';
+import 'package:fl_clash/common/iterable.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
@@ -20,6 +21,7 @@ class AutoSwitchManager {
   bool _isTesting = false; // 添加测试状态标记
   int _testInterval = PlatformAdapter.instance.defaultAutoSwitchInterval; // 测试间隔，秒
   String _testUrl = 'http://www.gstatic.com/generate_204';
+  int _concurrentTestCount = 20; // 并发测速数量，默认20个
   WidgetRef? _ref; // 保存当前的WidgetRef
   
   /// 设置WidgetRef引用
@@ -74,6 +76,14 @@ class AutoSwitchManager {
   void setTestUrl(String url) {
     _testUrl = url;
   }
+  
+  /// 设置并发测试数量
+  void setConcurrentTestCount(int count) {
+    _concurrentTestCount = count.clamp(1, 50); // 限制在1-50之间
+  }
+  
+  /// 获取当前并发测试数量
+  int get concurrentTestCount => _concurrentTestCount;
   
   /// 测试所有代理
   Future<void> _testAllProxies() async {
@@ -135,21 +145,33 @@ class AutoSwitchManager {
       
       print('正在测试组 ${group.name}，共 ${userProxies.length} 个用户节点');
       
-      // 测试延迟
+      // 测试延迟 - 使用并发测速（批量处理避免过载）
       final delayResults = <String, int>{};
       
-      for (final proxy in userProxies) {
+      // 创建并发测速任务
+      final delayFutures = userProxies.map((proxy) async {
         try {
           final delayResult = await clashCore.getDelay(_testUrl, proxy.name);
           
           if (delayResult.value != null && delayResult.value! > 0) {
-            delayResults[proxy.name] = delayResult.value!;
             print('节点 ${proxy.name} 延迟: ${delayResult.value}ms');
+            return MapEntry(proxy.name, delayResult.value!);
           }
         } catch (e) {
           // 测试失败，跳过该节点
           print('测试节点 ${proxy.name} 失败: $e');
-          continue;
+        }
+        return null;
+      }).toList();
+      
+      // 分批处理以避免同时发起过多请求
+      final batches = delayFutures.batch(_concurrentTestCount);
+      for (final batch in batches) {
+        final batchResults = await Future.wait(batch);
+        for (final result in batchResults) {
+          if (result != null) {
+            delayResults[result.key] = result.value;
+          }
         }
       }
       
@@ -295,6 +317,7 @@ class AutoSwitchManager {
       'enabled': _isEnabled,
       'testInterval': _testInterval,
       'testUrl': _testUrl,
+      'concurrentTestCount': _concurrentTestCount,
     };
   }
   
@@ -303,6 +326,7 @@ class AutoSwitchManager {
     final enabled = config['enabled'] as bool? ?? false;
     _testInterval = config['testInterval'] as int? ?? PlatformAdapter.instance.defaultAutoSwitchInterval;
     _testUrl = config['testUrl'] as String? ?? 'http://www.gstatic.com/generate_204';
+    _concurrentTestCount = config['concurrentTestCount'] as int? ?? 20;
     
     if (enabled && PlatformAdapter.instance.supportsBackgroundExecution) {
       enable();
