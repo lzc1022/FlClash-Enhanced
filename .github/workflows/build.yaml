@@ -130,8 +130,8 @@ jobs:
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             echo "Commit pushing"
-            git config --local user.email "chen08209@gmail.com"
-            git config --local user.name "chen08209"
+            git config --local user.email "1060494425@qq.com"
+            git config --local user.name "zc"
             git commit -m "Update changelog"
             git push
             if [ $? -eq 0 ]; then
@@ -241,7 +241,7 @@ jobs:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
           source-directory: ./tmp/
-          destination-github-username: chen08209
+          destination-github-username: zc
           destination-repository-name: FlClash-fdroid-repo
           user-name: 'github-actions[bot]'
           user-email: 'github-actions[bot]@users.noreply.github.com'
